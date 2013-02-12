@@ -1,0 +1,18 @@
+output 5
+a=1;
+if (a) then
+a=4;
+output a
+endif
+output a+4
+a=2;
+b=3;
+c=4;
+output (a+b)*2+c/2
+d=0;
+if (d) then
+output d
+else
+d=1;
+output d
+endif
