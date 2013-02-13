@@ -11,4 +11,10 @@ public class Sub extends Expr {
 	public int value() {
 		return expr1.value() - expr2.value();
 	}
+
+	@Override
+	public String unparse() {
+		// TODO Auto-generated method stub
+		return expr1.unparse() + "-" + expr2.unparse();
+	}
 }

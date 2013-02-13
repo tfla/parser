@@ -10,4 +10,10 @@ public class Num extends Expr {
 	public int value() {
 		return value;
 	}
+
+	@Override
+	public String unparse() {
+		// TODO Auto-generated method stub
+	    return new Integer(value).toString();
+	}
 }

@@ -10,4 +10,10 @@ public class OutputStmt extends Stmt {
 	public void print() {
 		System.out.println(exp.value());
 	}
+
+	@Override
+	public String unparse() {
+		// TODO Auto-generated method stub
+		return "output " + exp.unparse();
+	}
 }

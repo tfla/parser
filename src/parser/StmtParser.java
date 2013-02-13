@@ -20,7 +20,17 @@ public class StmtParser {
 	
 		return st;
 	}
+	
+	public void Outprint(){
+		while (st.size()>0){
+			System.out.println(st.remove(0).unparse());
+		}
+	}
 
+	public Stmt ifparse(){
+		return execute();
+	}
+	
 	private Stmt execute() {
 
 		if (theTokenizer.ttype == Tokenizer.TT_WORD) {
@@ -31,11 +41,11 @@ public class StmtParser {
 				return ostmt;
 			} else if (theTokenizer.sval.equals("if")) {
 				theTokenizer.next();
-				IfStmt istmt = new IfStmt(parser.build(), theTokenizer);
+				IfStmt istmt = new IfStmt(parser.build(), theTokenizer,this);
 				istmt.eval();
 				return istmt;
 			} else {
-				AssignStmt astmt = new AssignStmt(parser.build()); 
+				AssignStmt astmt = new AssignStmt(parser.build());
 				return astmt;
 			}
 
