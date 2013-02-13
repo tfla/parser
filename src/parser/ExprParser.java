@@ -59,7 +59,6 @@ public class ExprParser {
 			res = varList.new_nbr(n, i);
 			if (theTokenizer.ttype == ';') {
 				theTokenizer.next();
-				//res = new Var("",0);
 			}
 
 		} else if (theTokenizer.ttype != '=') {

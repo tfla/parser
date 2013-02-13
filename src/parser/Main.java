@@ -25,5 +25,6 @@ public class Main {
 		while (theTokenizer.atEOF() == false) {
 			sparser.Start();
 		}
+		sparser.Outprint();
 	}
 }

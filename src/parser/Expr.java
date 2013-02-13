@@ -4,4 +4,6 @@ package parser;
 public abstract class Expr {	
 		/** Beräkna värdet av uttrycket */
 		public abstract int value();
+		/**  Tolka uttrycket */
+		public abstract String unparse();
 }
