@@ -14,7 +14,14 @@ public class Mult extends Expr{
 
 	@Override
 	public String unparse() {
-		// TODO Auto-generated method stub
-		return expr1.unparse() + "*" + expr2.unparse();
+		if (expr1 instanceof Sub || expr1 instanceof Add) {
+			return "(" + expr1.unparse() + ")*" + expr2.unparse();
+		}
+		else if (expr2 instanceof Sub || expr2 instanceof Add) {
+			return expr1.unparse() + "*(" + expr2.unparse() + ")";
+		}
+		else {
+			return expr1.unparse() + "*" + expr2.unparse();
+		}
 	}
 }
