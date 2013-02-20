@@ -9,13 +9,10 @@ public class AssignStmt extends Stmt {
 
 	@Override
 	public String unparse() {
-		// TODO Auto-generated method stub
 		if (exp instanceof Var){
 		Var v = (Var)exp;
 		return v.GetName() + " = " + v.value();
 		}
 		else return "Fel";
-		
 	}
-
 }
