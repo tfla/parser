@@ -5,35 +5,47 @@ import java.util.TreeMap;
 
 public class varList {
 	private static Map<String,Integer> vlist;
-/**
- * 
- */
+
+	/**
+	 * Skapar et uttrycksträd.
+	 */
 	public varList() {
 		vlist = new TreeMap<String,Integer>();
 	}
-/**
- * 
- * @param s
- * @return
- */
+
+	/**
+	 * Returnerar true om uttrycksträdet innehåller strängen s.
+	 *
+	 * @param s
+	 *			- strängen som skall eftersökas i uttryckträdet.
+	 * @return	true om uttrycksträdet innehåller strängen s.
+	 */
 	public static boolean contains(String s) {
 		return vlist.containsKey(s);
 	}
-/**
- * 
- * @param s
- * @param v
- * @return
- */
+
+	/**
+	 * Skapar och lägger till en ny variabel i uttrycksträdet.
+	 * 
+	 * @param s
+	 *			- variabelns namn.
+	 * @param v
+	 *			- variabelns värde.
+	 * @return den nyss tillagda variabeln.
+	 */
 	public Var add(String s, int v) {
 			vlist.put(s,v);
 			return new Var(s);
 	}
-/**
- * @throws RuntimeException
- * @param s
- * @return
- */
+
+	/**
+	 * Returnerar värdet för variabeln med namn s.
+	 *
+	 * @throws RuntimeException om variabeln inte återfinns i trädet.
+	 * @param s
+	 *			- variabelns namn.
+	 * @return variabelns värde.
+	 */
 	public int getValue(String s) {
 		if (contains(s) != false) {
 			return vlist.get(s);
@@ -41,10 +53,4 @@ public class varList {
 		throw new RuntimeException("Variable not initized!");
 	}
 
-//	public void print() {
-//		while (vlist.size() > 0) {
-//			int v = (int) vlist.remove(vlist.size() - 1);
-//			System.out.println(v.unparse(0) + "=" + v.value(this));
-//		}
-//	}
 }

@@ -13,10 +13,10 @@ public class Tokenizer extends StreamTokenizer {
 		ordinaryChar('/');
 	}
 
-/**  
- * 
- * @return Typen på den läst Token.
- */
+	/**  
+	 * 
+	 * @return Typen på den läst Token.
+	 */
 	public int next() {
 		try {
 			return nextToken();
@@ -26,31 +26,40 @@ public class Tokenizer extends StreamTokenizer {
 	}
 	
 	/**
-	 * @throws RuntimeExeception Om inte nuvarade Token är samma som inparametern.
+	 * Metod för att konstatera att en specifik Token lästs.
+	 *
+	 * @throws RuntimeExeception om inte nuvarade Token är samma som inparametern ch.
 	 * @param ch
+	 *			- tecknet för vilket ett fel inte skall kastas.
 	 */
 	public void accept(char ch) {
 		if (ttype == ch) {
 			next();
 		} else {
-			throw new RuntimeException("Expected: " + ch + " found: " + found());
+			throw new RuntimeException("ERROR: Expected: " + ch + " found: " + found());
 		}
 	}
 
-/** Metod för att konstatera att en specifik token lästs.
- * @param s
- */
+	/** 
+	 * Metod för att konstatera att en specifik Token lästs.
+	 *
+	 * @throws RuntimeException om inte nuvarande Token är samma som inparametern s.
+	 * @param s
+	 *			- strängen för vilken ett fel inte skall kastas.
+	 */
 	public void accept(String s) {
 		if (found().equals(s)) {
 			next();
 		} else {
-			throw new RuntimeException("Expected: " + s + " found: " + found());
+			throw new RuntimeException("ERROR: Expected: " + s + " found: " + found());
 		}
 	}
-/**
- * 
- * @return Senaste lästa Token
- */
+
+	/**
+	 * Returnerar en sträng som representerar den senaste lästa Token.
+	 *
+	 * @return senaste lästa Token
+	 */
 	public String found() {
 		switch (ttype) {
 		case TT_WORD:
@@ -65,10 +74,11 @@ public class Tokenizer extends StreamTokenizer {
 			return (new Character((char) ttype)).toString();
 		}
 	}
-/**
- * 
- * @return
- */
+	/**
+	 * Returnerar true om nuvarande Token är END_OF_FILE.
+	 *
+	 * @return true om nuvarande Token är END_OF_FILE.
+	 */
 	public boolean atEOF() {
 		return ttype == TT_EOF;
 	}
