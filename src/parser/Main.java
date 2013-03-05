@@ -5,6 +5,13 @@ import java.io.FileReader;
 import java.io.Reader;
 
 public class Main {
+	/**
+	 * Main-metoden. Startar parsning och eventuellt exekvering av program.
+	 * 
+	 * @param args
+	 *            - argument till main-metoden (skall i detta fall bestå av ett
+	 *            filnamn).
+	 */
 	public static void main(String[] args) {
 		Reader reader = null;
 		if (args.length == 0) {
@@ -18,13 +25,9 @@ public class Main {
 			System.exit(-1);
 		}
 		Tokenizer theTokenizer = new Tokenizer(reader);
-		ExprParser parser = new ExprParser(theTokenizer);
-		StmtParser sparser = new StmtParser(theTokenizer, parser);
-		varList.VarIn();
+		StmtParser sparser = new StmtParser(theTokenizer);
 		theTokenizer.next();
-		while (theTokenizer.atEOF() == false) {
-			sparser.Start();
-		}
-		sparser.Outprint();
+		System.out.print(sparser.Build().unparse(0));
+		sparser.exec();
 	}
 }

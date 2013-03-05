@@ -1,60 +1,72 @@
 package parser;
 
-import java.util.LinkedList;
-
 public class IfStmt extends Stmt {
-	private Expr exp;
-	private Tokenizer theTokenizer;
-	private StmtParser sparser;
-	private LinkedList<String> list;
-	private LinkedList<Stmt> slist;
+	private Expr exp; // vilkor
+	private StatementSeq list; // "then" satser
+	private StatementSeq slist; // "else" satser
 
-	IfStmt(Expr exp, Tokenizer theTokenizer, StmtParser sparser) {
+	/**
+	 * Konstruktor
+	 * 
+	 * @param exp
+	 *            - uttrycket som ska utvärderas.
+	 * @param list
+	 *            - satsföljden som ska utföras om exp är sant (!= 0).
+	 * @param slist
+	 *            - satsföljden som ska utföras om exp är falskt (== 0).
+	 */
+	IfStmt(Expr exp, StatementSeq list, StatementSeq slist) {
 		this.exp = exp;
-		this.theTokenizer = theTokenizer;
-		list = new LinkedList<String>();
-		this.sparser = sparser;
-		slist = new LinkedList<Stmt>();
+		this.list = list;
+		this.slist = slist;
 	}
 
-	public void eval() {
-		if (exp.value() == 0) {
-			while (!theTokenizer.sval.equals("endif")
-					&& !theTokenizer.sval.equals("else")) {
-				theTokenizer.next();
-			}
-			if (theTokenizer.sval.equals("endif")) {
-				list.add("endif");
-			} else {
-				list.add("else");
-				theTokenizer.next();
-				while (!theTokenizer.sval.equals("endif")){
-					slist.add(sparser.ifparse());
-				}
-				
-			}
-		} else {
-			theTokenizer.next();
-		}
-	}
-
-	@Override
-	public String unparse() {
+	/**
+	 * Utför parsingen av if-satsen.
+	 * 
+	 * @param level
+	 *            - indenteringsnivån som skall användas.
+	 * @return texten som motsvarar if-satsen.
+	 */
+	public String unparse(int level) {
 		StringBuilder sb = new StringBuilder();
-		sb.append("if " + exp.unparse() + " then");
-		while (list.size() > 0) {
-			sb.append('\n');
-			String s = list.remove();
-			if (s.equals("else")) {
-				theTokenizer.next();
-				sb.append(s);
-				while (slist.size() != 0){
-				sb.append("\n" + slist.remove().unparse());
-				}
-			} else {
-				sb.append(s);
-			}
+		sb.append("if " + exp.unparse(0) + " then");
+		sb.append('\n');
+		sb.append(list.unparse(level + 1));
+		if (slist.size() > 0) {
+			sb.append(blank(level) + "else" + '\n');
+		}
+		sb.append(slist.unparse(level + 1));
+		sb.append(blank(level) + "endif");
+		return sb.toString();
+	}
+
+	/**
+	 * Hjälpmedod för att lägga till rätt antal blanktecken för if-satser på
+	 * indenteringsnivån level.
+	 * 
+	 * @param level
+	 *            - indenteringsnivån som skall användas.
+	 * @return en sträng med rätt antal blanktecken.
+	 */
+	private String blank(int level) {
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < level * 2; i++) {
+			sb.append(" ");
 		}
 		return sb.toString();
+	}
+
+	/**
+	 * Beräkna värdet av satserna i if-satsen.
+	 */
+	@Override
+	public void exec(Table table) {
+		if (exp.value(table) != 0) {
+			list.exec(table);
+		} else {
+			slist.exec(table);
+		}
+
 	}
 }

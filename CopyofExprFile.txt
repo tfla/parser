@@ -1,0 +1,18 @@
+a=2;
+if a+2 then 
+b=1;
+else
+b=a;
+endif 
+output b+1
+if a then
+if b then 
+c=3
+d=c;
+else 
+c=4
+endif
+else 
+c=5
+endif
+output c

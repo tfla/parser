@@ -1,27 +1,36 @@
 package parser;
 
-
 public class Var extends Expr {
-	private int value;
-	private String name; 
+	private String name;
 
-	public Var(String s,int v) {
-		value = v;
+	/**
+	 * 
+	 * @param s
+	 */
+	public Var(String s) {
 		this.name = s;
 	}
-    public boolean equals(Object obj){
-    		return name.equals((String) obj); 
-    }
-	public int value() {
-		return value;
+
+	/**
+ * 	
+ */
+	public boolean equals(Object obj) {
+		return name.equals((String) obj);
 	}
-	public String GetName() {
-		return name;
+
+	/**
+  * 
+  */
+	public int value(Table table) {
+		return table.getValue(name);
 	}
+
+	/**
+ * 
+ */
 	@Override
-	public String unparse() {
-		// TODO Auto-generated method stub
+	public String unparse(int prec) {
 		return name;
 	}
-	 
+
 }

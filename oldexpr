@@ -1,0 +1,31 @@
+a=2;;;;; if a+2 
+then b=1; else
+b=a; endif; output b+1
+if a then
+
+if b      then c=3;       d=c+4
+else c=4 endif
+      else c=5 endif;
+ 
+output c
+       output ((a+5)*3+(3*(3+5/2)))
+       output ((a+5)*3+(3*((3+5)/2)))
+output 8-2-(6+3)
+output 8-2-6+3
+output d
+output 8+2+6+3
+output 8-2+6+3
+output 8+2+6-3
+output 8-2+6-3
+output 8+2-(6+3)
+output 8-2-(6+3)
+output 8+2-(6-3)
+output 8-2-(6-3)
+output ((8*2)*6*(3))
+output 8/2*6*3
+output (8*2*6)/3
+output 8/2*(6/3)
+output 8*2/(6*3)
+output 8/2/(6*3)
+output 8*2/(6/3)
+output 8/2/(6/3)
