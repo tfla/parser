@@ -3,17 +3,30 @@ package parser;
 public class ExprParser {
 	private Tokenizer theTokenizer; // används för att hämta token från input
 
-	/** Konstruktor. Skapar en uttrycksparser knuten till en Tokenizer t */
+	/**
+	 * Konstruktor. Skapar en uttrycksparser knuten till en Tokenizer t.
+	 * 
+	 * @param t
+	 *            - tokenizer-objekt knuten till indatan.
+	 */
 	public ExprParser(Tokenizer t) {
 		theTokenizer = t;
 	}
 
-	/** Returnerar ett uttrycksträd som representerar det uttryck som parsras */
+	/**
+	 * Returnerar ett uttryck som representerar det uttrycksträd som parsras.
+	 * 
+	 * @return ett uttryck som motsvarar hela uttrycksträdet.
+	 */
 	public Expr build() {
 		return expr();
 	}
 
-	/* Metod som motsvarar startproduktionen */
+	/**
+	 * Metod som motsvarar startproduktionen.
+	 * 
+	 * @return uttrycket som parsats.
+	 */
 	private Expr expr() {
 		Expr res, nextTerm;
 		res = term();
@@ -30,7 +43,11 @@ public class ExprParser {
 		return res;
 	}
 
-	/* Metod motsvarande term-produktionen */
+	/**
+	 * Metod motsvarande term-produktionen.
+	 * 
+	 * @return uttrycket (motsvarande en term) som parsats.
+	 */
 	private Expr term() {
 		Expr res, nextFactor;
 		res = factor();
@@ -47,33 +64,11 @@ public class ExprParser {
 		return res;
 	}
 
-	private Expr var() {
-		String n = theTokenizer.sval;
-		theTokenizer.next();
-		int i = 0;
-		Var res;
-		if (theTokenizer.ttype == '=') {
-			theTokenizer.next();
-			theTokenizer.next();
-			i = (int) theTokenizer.nval;
-			res = varList.new_nbr(n, i);
-			if (theTokenizer.ttype == ';') {
-				theTokenizer.next();
-			}
-
-		} else if (theTokenizer.ttype != '=') {
-			;
-			res = varList.getNum(n);
-		} else {
-			throw new RuntimeException("\nExprParser.TT_NUMBER: found:  "
-					+ theTokenizer.found());
-		}
-		return res;
-	}
-
-
-
-	/* Metod motsvarande factor-produktionen. */
+	/**
+	 * Metod motsvarande factor-produktionen.
+	 * 
+	 * @return uttrycket (motsvarande an factor) som parsats.
+	 */
 	private Expr factor() {
 		if (theTokenizer.ttype == '(') {
 			theTokenizer.next();
@@ -84,12 +79,11 @@ public class ExprParser {
 			int x = (int) theTokenizer.nval;
 			theTokenizer.next();
 			return new Num(x);
-		} else if (theTokenizer.ttype == Tokenizer.TT_WORD) {
-
-			Var varb = (Var) var();
-			return varb;
-			// throw new RuntimeException("\nExprParser.VAR: found:  " +
-			// theTokenizer.found());
+		} else if (theTokenizer.ttype == Tokenizer.TT_WORD
+				&& (theTokenizer.sval.matches("\\w*?"))) {
+			Var var = new Var(theTokenizer.sval);
+			theTokenizer.next();
+			return var;
 		} else {
 			throw new RuntimeException("\nExprParser.factor: found:  "
 					+ theTokenizer.found());

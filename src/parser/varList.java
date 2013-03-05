@@ -1,49 +1,50 @@
 package parser;
 
-import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class varList {
-	private static ArrayList<Var> vlist;
-
-	public static void VarIn() {
-		vlist = new ArrayList<Var>();
+	private static Map<String,Integer> vlist;
+/**
+ * 
+ */
+	public varList() {
+		vlist = new TreeMap<String,Integer>();
 	}
-
-	public static int contains(String s) {
-		Iterator<Var> it = vlist.iterator();
-		int pos = 0;
-		while (it.hasNext()) {
-			Var v = it.next();
-			if (v.GetName().equals(s)) {
-				return pos;
-			}
-			pos++;
+/**
+ * 
+ * @param s
+ * @return
+ */
+	public static boolean contains(String s) {
+		return vlist.containsKey(s);
+	}
+/**
+ * 
+ * @param s
+ * @param v
+ * @return
+ */
+	public Var add(String s, int v) {
+			vlist.put(s,v);
+			return new Var(s);
+	}
+/**
+ * @throws RuntimeException
+ * @param s
+ * @return
+ */
+	public int getValue(String s) {
+		if (contains(s) != false) {
+			return vlist.get(s);
 		}
-		return -1;
+		throw new RuntimeException("Variable not initized!");
 	}
 
-	public static Var new_nbr(String s, int v) {
-		if (contains(s) == -1) {
-			vlist.add(new Var(s, v));
-			return new Var(s, v);
-		} else {
-			vlist.set(contains(s), new Var(vlist.get(contains(s)).GetName(), v));
-			return vlist.get(contains(s));
-		}
-	}
-
-	public static Var getNum(String s) {
-		if (contains(s) != -1) {
-			return vlist.get(contains(s));
-		}
-		return null;
-	}
-
-	public static void print() {
-		while (vlist.size() > 0) {
-			Var v = vlist.remove(vlist.size() - 1);
-			System.out.println(v.GetName() + "=" + v.value());
-		}
-	}
+//	public void print() {
+//		while (vlist.size() > 0) {
+//			int v = (int) vlist.remove(vlist.size() - 1);
+//			System.out.println(v.unparse(0) + "=" + v.value(this));
+//		}
+//	}
 }
